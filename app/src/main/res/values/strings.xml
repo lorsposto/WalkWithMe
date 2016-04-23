@@ -1,0 +1,13 @@
+<resources>
+    <string name="maps_api_key">AIzaSyANiXXAe6NPunvipFW1gsNEq9gtWjSv5R0</string>
+    <string name="app_name">WalkWithMe</string>
+    <string name="google_app_id">walkwithme-617de</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="summary_template">Distance: %1$,.2f km\nEstimated time: %2$,.2f minutes</string>
+
+    <string-array name="list_menu_items">
+        <item></item>
+    </string-array>
+</resources>

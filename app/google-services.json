@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_id": "walkwithme-617de",
+    "project_number": "721006382567",
+    "name": "WalkWithMe"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721006382567:android:35aa1e6480b62fc1",
+        "client_id": "android:itp341.sposto.lorraine",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "itp341.sposto.lorraine",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721006382567-13pnhf22sc53bvngdf0bphhblau9dm7b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "itp341.sposto.lorraine",
+            "certificate_hash": "019D66CBE16DB18BD3948AF849CF440CA8F5EDC1"
+          }
+        },
+        {
+          "client_id": "721006382567-c8aek6oh2i4rlmtp32hdscrbthi694t8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721006382567:android:38dee09082df39b3",
+        "client_id": "android:itp341.sposto.lorraine.walkwithme",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "itp341.sposto.lorraine.walkwithme",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721006382567-c8aek6oh2i4rlmtp32hdscrbthi694t8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
