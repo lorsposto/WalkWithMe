@@ -6,6 +6,13 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="summary_template">Distance: %1$,.2f km\nEstimated time: %2$,.2f minutes</string>
+    <string name="button_label_start_journey">Start Journey</string>
+    <string name="button_label_add_watcher">Add Voyeur</string>
+    <string name="toast_contacts_notified">Contacts notified via text!</string>
+    <string name="message_notify_sms">Your friend %1$s is about to embark on a journey. Open up WalkWithMe to watch them!</string>
+
+    <string name="label_contacts">Contacts</string>
+    <string name="button_select_contacts_notify">Notify!</string>
 
     <string-array name="list_menu_items">
         <item></item>

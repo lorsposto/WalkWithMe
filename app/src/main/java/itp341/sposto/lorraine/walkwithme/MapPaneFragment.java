@@ -1,6 +1,9 @@
 package itp341.sposto.lorraine.walkwithme;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -12,12 +15,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -79,9 +84,15 @@ public class MapPaneFragment extends Fragment
     private TextView mTextJourneySummary;
     private CardView mSummaryCardView;
 
+    private ArrayList<String> mPhoneNumbers;
+
     private Route mRoute;
 
     SupportPlaceAutocompleteFragment mAutocompleteFragment;
+
+    public MapPaneFragment() {
+        mPhoneNumbers = new ArrayList<>();
+    }
 
     public static MapPaneFragment newInstance() {
         
@@ -144,6 +155,17 @@ public class MapPaneFragment extends Fragment
         });
 
         mButtonStartJourney = (Button) v.findViewById(R.id.startJourneyButton);
+        mButtonStartJourney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), AddWatcherActivity.class);
+                i.putExtra(Keys.KEY_DEST_ADDRESS, mRoute.getmOriginAddress());
+                i.putExtra(Keys.KEY_DEST_ADDRESS, mRoute.getmDestinationAddress());
+                i.putExtra(Keys.KEY_DURATION, mRoute.getDurationinMinutes() + " minutes");
+                i.putExtra(Keys.KEY_DISTANCE, mRoute.getDistanceInKm() + " km");
+                startActivityForResult(i, 0);
+            }
+        });
         mTextJourneySummary = (TextView) v.findViewById(R.id.journeySummary);
         mSummaryCardView = (CardView) v.findViewById(R.id.summaryCardView);
 
@@ -362,4 +384,28 @@ public class MapPaneFragment extends Fragment
         mSummaryCardView.setVisibility(View.VISIBLE);
     }
 
+    private void sendSMS(String phoneNumber) {
+        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(), 0, new Intent(getActivity(), MapPaneFragment.class), 0);
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(phoneNumber, null, getString(R.string.message_notify_sms, "NAME"), pendingIntent, null);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult");
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            Log.d(TAG, "Result ok");
+            mPhoneNumbers = data.getStringArrayListExtra(Keys.KEY_PHONE_NUMBERS);
+            if (mPhoneNumbers.size() > 0) {
+                for (String pn : mPhoneNumbers) {
+                    sendSMS(pn);
+                }
+                Toast.makeText(getActivity(), getString(R.string.toast_contacts_notified), Toast.LENGTH_SHORT).show();
+                mButtonStartJourney.setText(getString(R.string.button_label_start_journey));
+            }
+        } else {
+            Log.d(TAG, "Result cancelled");
+        }
+    }
 }

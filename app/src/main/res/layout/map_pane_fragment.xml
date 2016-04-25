@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:id="@+id/startJourneyButton"
-                android:text="GO!"/>
+                android:text="@string/button_label_add_watcher"/>
 
         </LinearLayout>
 
