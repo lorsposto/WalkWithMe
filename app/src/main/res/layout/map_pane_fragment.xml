@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/mapPaneFragment">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -33,19 +35,53 @@
             />
     </android.support.v7.widget.CardView>
 
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_person_add_black_24dp"
+        android:layout_alignParentBottom="true"
+        app:backgroundTint="@color/colorPrimary"
+        android:tint="@color/tw__solid_white"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:visibility="gone"
+        android:id="@+id/addWatcherButton"/>
+
     <android.support.v7.widget.CardView
         android:id="@+id/summaryCardView"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:layout_toEndOf="@id/addWatcherButton"
         android:layout_margin="@dimen/search_bar_margin">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/go_panel_padding"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/summary_view_title"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/clearRouteButton"
+                    android:layout_gravity="end"
+                    android:src="@drawable/ic_clear_black_24dp"/>
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -55,8 +91,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/tw__solid_white"
                 android:id="@+id/startJourneyButton"
-                android:text="@string/button_label_add_watcher"/>
+                android:text="@string/button_label_start_journey" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/tw__solid_white"
+                android:id="@+id/finishJourneyButton"
+                android:text="@string/button_label_finish_journey"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

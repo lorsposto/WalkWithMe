@@ -7,8 +7,13 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <permission android:name="itp341.sposto.lorraine.walkwithme.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="itp341.sposto.lorraine.walkwithme.permission.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"
@@ -24,15 +29,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".AddWatcherActivity">
+        <activity android:name=".AddWatcherActivity"></activity>
+        <activity android:name=".AuthenticateActivity"></activity>
 
-        </activity>
+        <receiver android:name=".NotifyReceiver" android:process=":remote" />
 
-        <!--<meta-data-->
-            <!--android:name="com.google.android.maps.v2.API_KEY"-->
-            <!--android:value="AIzaSyANiXXAe6NPunvipFW1gsNEq9gtWjSv5R0"/>-->
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyANiXXAe6NPunvipFW1gsNEq9gtWjSv5R0"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="4f0650ca5d5d541a5b9ba8c925604387a993a8b1" />
     </application>
 
     <uses-feature

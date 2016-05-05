@@ -1,4 +1,4 @@
-package itp341.sposto.lorraine.walkwithme;
+package itp341.sposto.lorraine.walkwithme.models;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.PolyUtil;

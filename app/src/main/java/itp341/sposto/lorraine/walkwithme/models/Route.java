@@ -1,4 +1,4 @@
-package itp341.sposto.lorraine.walkwithme;
+package itp341.sposto.lorraine.walkwithme.models;
 
 import android.util.Log;
 
@@ -9,7 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by LorraineSposto on 4/23/16.
@@ -152,12 +151,10 @@ public class Route {
     }
 
     public double getDurationinMinutes() {
-        Log.d(TAG, "duration is " + mDuration);
         return mDuration/60;
     }
 
     public double getDistanceInKm() {
-        Log.d(TAG, "distance is " + mDistance);
         return mDistance/1000;
     }
 

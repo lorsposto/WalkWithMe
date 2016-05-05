@@ -1,20 +1,45 @@
 <resources>
     <string name="maps_api_key">AIzaSyANiXXAe6NPunvipFW1gsNEq9gtWjSv5R0</string>
     <string name="app_name">WalkWithMe</string>
-    <string name="google_app_id">walkwithme-617de</string>
+    <!--<string name="google_app_id">walkwithme-617de</string>-->
+    <string name="google_project_number">721006382567</string>
+    <string name="dev_google_project_number">721006382567000</string>
+    <string name="gcm_sender_url">721006382567000@gcm.googleapis.com</string>
+
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    
+    <string name="dev_xmpp_server">gcm-preprod.googleapis.com:5236</string>
+    <string name="xmpp_server">gcm-xmpp.googleapis.com:5235</string>
+
+    <string name="summary_view_title">Journey Summary</string>
 
     <string name="summary_template">Distance: %1$,.2f km\nEstimated time: %2$,.2f minutes</string>
     <string name="button_label_start_journey">Start Journey</string>
-    <string name="button_label_add_watcher">Add Voyeur</string>
+    <string name="button_label_finish_journey">Complete Journey</string>
     <string name="toast_contacts_notified">Contacts notified via text!</string>
-    <string name="message_notify_sms">Your friend %1$s is about to embark on a journey. Open up WalkWithMe to watch them!</string>
+    <string name="toast_sms_failed">SMS failed to send to %1$s!</string>
+    <string name="message_notify_start_sms">Your friend %1$s is about to embark on a journey. They should reach their destination in %2$.0f minutes.</string>
+    <string name="message_notify_near_end_sms">Your friend %1$s should be finishing their journey soon! Look out for them to reach their destination!</string>
+    <string name="message_notify_end_sms">Your friend %1$s has finished their journey safely! Thanks for watching out!</string>
 
     <string name="label_contacts">Contacts</string>
-    <string name="button_select_contacts_notify">Notify!</string>
+    <string name="button_select_contacts_notify">Notify these people!</string>
 
-    <string-array name="list_menu_items">
-        <item></item>
+    <string name="authenticate_message">Sign in using your phone number.</string>
+
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_message">Enter your name so your friends can identify you!</string>
+
+    <string name="dialog_journey_started_title">Start Journey</string>
+    <string name="dialog_journey_finished_title">Finish Journey</string>
+    <string name="dialog_journey_started_message">The contacts that you selected have been notified that you have started your journey to <b>%1$s</b>!\n\nThey will receive a reminder of your travel in %2$,.0f minutes and another in %3$,.0f minutes! Be sure to check in with them along the way!</string>
+    <string name="dialog_journey_finished_message">The contacts that you selected have been notified that you have finished your journey to <b>%1$s</b>!\n\nThey will receive an update right now!</string>
+
+    <string name="dialog_recent_places_title">Recent Places</string>
+
+    <string-array name="menu_items">
+        <item>Change name</item>
+        <item>Past destinations</item>
     </string-array>
 </resources>

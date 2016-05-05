@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,16 +9,33 @@
         android:layout_height="wrap_content"
         android:focusableInTouchMode="false"
         android:focusable="false"
-        android:clickable="false"/>
+        android:clickable="false"
+        android:layout_row="0"
+        android:layout_column="0" />
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@android:id/text1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:gravity="center_vertical"
-        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall" />
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@android:id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:gravity="center_vertical"
+            android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+            android:text="placeholder"
+            android:layout_row="0"
+            android:layout_column="1"/>
 
-</LinearLayout>
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@android:id/text2"
+            android:textSize="12sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:gravity="center_vertical"
+            android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+            android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+            android:text="placeholder"
+            android:layout_row="1"
+            android:layout_column="1"/>
+
+</GridLayout>
