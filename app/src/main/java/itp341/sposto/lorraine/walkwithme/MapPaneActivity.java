@@ -1,10 +1,12 @@
 package itp341.sposto.lorraine.walkwithme;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,7 +19,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import itp341.sposto.lorraine.walkwithme.dialogs.GetNameDialogFragment;
-import itp341.sposto.lorraine.walkwithme.dialogs.RecentPlacesDialog;
 import itp341.sposto.lorraine.walkwithme.models.MyPlace;
 
 /**
@@ -68,7 +69,9 @@ public class MapPaneActivity extends AppCompatActivity {
                     // load recent places
                     Log.d(TAG, "Get recent places");
                     ArrayList<MyPlace> map = ((MapPaneFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container)).getRecentPlaces();
-                    RecentPlacesDialog.newInstance(map).show(getSupportFragmentManager(), "RecentPlacesDialog");
+                    Intent i = new Intent(getApplicationContext(), RecentPlacesActivity.class);
+                    i.putExtra(Keys.KEY_RECENT_PLACES, map);
+                    startActivityForResult(i, 0);
                 }
             }
         });
@@ -95,10 +98,12 @@ public class MapPaneActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
             }
         };
-        mDrawerToggle.setDrawerIndicatorEnabled(false);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
-        mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic_menu);
-
+//        mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic_menu);
+//        mDrawerToggle.setDrawerIndicatorEnabled(false);
+        ActionBar ab = getSupportActionBar();
+        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -116,4 +121,15 @@ public class MapPaneActivity extends AppCompatActivity {
         super.onPause();
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult, " + requestCode + " " + resultCode + " " + data);
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK && data != null) {
+                String id = data.getStringExtra(Keys.KEY_DEST_ADDRESS);
+                ((MapPaneFragment) (getSupportFragmentManager().findFragmentById(R.id.frame_container))).setPlaceGetDirections(id);
+            }
+        }
+    }
 }

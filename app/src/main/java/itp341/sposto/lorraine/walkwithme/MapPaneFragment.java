@@ -624,6 +624,7 @@ public class MapPaneFragment extends Fragment
     }
 
     public void setPlaceGetDirections(String placeID) {
+        Log.d(TAG, "setPlaceGetDirections");
         DrawerLayout menu = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         menu.closeDrawers();
 

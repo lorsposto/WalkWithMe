@@ -31,6 +31,7 @@
 
         <activity android:name=".AddWatcherActivity"></activity>
         <activity android:name=".AuthenticateActivity"></activity>
+        <activity android:name=".RecentPlacesActivity"></activity>
 
         <receiver android:name=".NotifyReceiver" android:process=":remote" />
 

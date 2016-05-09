@@ -19,6 +19,7 @@
     <string name="button_label_finish_journey">Complete Journey</string>
 
     <string name="label_contacts">Contacts</string>
+    <string name="label_places">Recent Places</string>
     <string name="button_select_contacts_notify">Notify these people!</string>
 
     <string name="authenticate_message">Sign in using your phone number.</string>
