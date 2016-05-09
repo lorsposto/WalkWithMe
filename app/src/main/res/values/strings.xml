@@ -17,11 +17,6 @@
     <string name="summary_template">Distance: %1$,.2f km\nEstimated time: %2$,.2f minutes</string>
     <string name="button_label_start_journey">Start Journey</string>
     <string name="button_label_finish_journey">Complete Journey</string>
-    <string name="toast_contacts_notified">Contacts notified via text!</string>
-    <string name="toast_sms_failed">SMS failed to send to %1$s!</string>
-    <string name="message_notify_start_sms">Your friend %1$s is about to embark on a journey. They should reach their destination in %2$.0f minutes.</string>
-    <string name="message_notify_near_end_sms">Your friend %1$s should be finishing their journey soon! Look out for them to reach their destination!</string>
-    <string name="message_notify_end_sms">Your friend %1$s has finished their journey safely! Thanks for watching out!</string>
 
     <string name="label_contacts">Contacts</string>
     <string name="button_select_contacts_notify">Notify these people!</string>
@@ -37,6 +32,26 @@
     <string name="dialog_journey_finished_message">The contacts that you selected have been notified that you have finished your journey to <b>%1$s</b>!\n\nThey will receive an update right now!</string>
 
     <string name="dialog_recent_places_title">Recent Places</string>
+
+    <string name="dialog_welcome_title_named">Welcome %1$s!</string>
+    <string name="dialog_welcome_title">Welcome!</string>
+    <string name="dialog_welcome_message">Enter a destination into the search bar and begin your journey! You can find your recent destinations in the menu.</string>
+
+    <string name="dialog_no_contacts_title">No Contacts Added</string>
+    <string name="dialog_no_contacts_message">You have not selected any contacts to watch you on your journey! Try adding some!</string>
+
+    <string name="dont_show_again">Don\'t show this again.</string>
+
+    <string name="notification_title">WalkWithMe</string>
+    <string name="notification_halfway_message">You should be about halfway through your journey by now!</string>
+    <string name="notification_fullway_message">You journey should be ending soon! Check in with your friends to let them know how you are!</string>
+
+    <string name="toast_contacts_notified">Contacts notified via text!</string>
+    <string name="toast_sms_failed">SMS failed to send to %1$s!</string>
+    <string name="message_notify_start_sms">Your friend %1$s is about to embark on a journey. They should reach their destination in %2$.0f minutes.</string>
+    <string name="message_notify_halfway_sms">Your friend %1$s should be halfway through their journey! Look out for them to reach their destination!</string>
+    <string name="message_notify_fullway_sms">Your friend %1$s should be nearing the end of their journey! Look out for them to reach their destination!</string>
+    <string name="message_notify_end_sms">Your friend %1$s has finished their journey safely! Thanks for watching out!</string>
 
     <string-array name="menu_items">
         <item>Change name</item>

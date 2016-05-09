@@ -18,6 +18,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
@@ -81,6 +83,7 @@ import io.fabric.sdk.android.Fabric;
 import itp341.sposto.lorraine.walkwithme.dialogs.FinishJourneyDialogFragment;
 import itp341.sposto.lorraine.walkwithme.dialogs.GetNameDialogFragment;
 import itp341.sposto.lorraine.walkwithme.dialogs.StartJourneyDialogFragment;
+import itp341.sposto.lorraine.walkwithme.dialogs.WelcomeDialogFragment;
 import itp341.sposto.lorraine.walkwithme.models.Contact;
 import itp341.sposto.lorraine.walkwithme.models.MyPlace;
 import itp341.sposto.lorraine.walkwithme.models.Route;
@@ -125,6 +128,8 @@ public class MapPaneFragment extends Fragment
     private Location mCurrentLocation; // current location set onLocationChanged
     private boolean mLocationUpdates = true;
     private boolean mJourneyInProgress;
+
+    private boolean mShowWelcome;
 
     /**
      * View member variables
@@ -182,6 +187,7 @@ public class MapPaneFragment extends Fragment
         mIsAuthenticated = settings.getBoolean(Keys.SharedPref.KEY_DIGITS_IS_AUTHENTICATED, false);
         mOwnPhoneNumber = settings.getString(Keys.SharedPref.KEY_DIGITS_PHONE_NUMBER, null);
         mUserName = settings.getString(Keys.SharedPref.KEY_USERNAME, null);
+        mShowWelcome = settings.getBoolean(Keys.SharedPref.KEY_SHOW_WELCOME, true);
 
         if (!mIsAuthenticated || mOwnPhoneNumber == null) {
             Intent i = new Intent(getActivity(), AuthenticateActivity.class);
@@ -192,6 +198,8 @@ public class MapPaneFragment extends Fragment
         if (mUserName == null) {
             new GetNameDialogFragment().show(getChildFragmentManager(), "GetNameDialog");
         }
+
+        if (mShowWelcome) WelcomeDialogFragment.newInstance(mUserName).show(getChildFragmentManager(), "WelcomeDialog");
 
         // read recent places
         readRecentPlaces();
@@ -208,6 +216,7 @@ public class MapPaneFragment extends Fragment
         }
 
         mSMSAlarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+
     }
 
     @Nullable
@@ -290,18 +299,35 @@ public class MapPaneFragment extends Fragment
         return v;
     }
 
-    private void launchSMSAlarm(int when) {
+    private void launchSMSAlarm(int when, String message) {
+        Log.d(TAG, "launchSMSAlarm for minutes: " + when);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
 
         calendar.add(Calendar.MINUTE, when);
 
         Intent intent = new Intent(getContext(), NotifyReceiver.class);
+        intent.putExtra(Keys.INTENT_CODE, Keys.SMS_CODE);
         intent.putExtra(Keys.KEY_MY_NUMBER, mOwnPhoneNumber);
-        intent.putExtra(Keys.KEY_PHONE_NUMBERS, Contact.getPhoneNumbersFromList(mContacts));
+        intent.putExtra(Keys.KEY_MESSAGE, message);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(getContext(), 0, intent, 0);
 
         mSMSAlarmManager.setWindow(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 5, alarmIntent);
+    }
+
+
+    private void setTimedNotification(int minutes, String message) {
+        Log.d(TAG, "setTimedNotification for minutes: " + minutes);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        calendar.add(Calendar.MINUTE, minutes);
+        Intent i = new Intent(getContext(), NotifyReceiver.class);
+        i.putExtra(Keys.INTENT_CODE, Keys.NOTIF_CODE);
+        i.putExtra(Keys.KEY_MESSAGE, message);
+        PendingIntent pi = PendingIntent.getBroadcast(getContext(), (int) System.currentTimeMillis(), i, 0);
+
+        mSMSAlarmManager.setWindow(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 5, pi);
     }
 
     @Override
@@ -598,6 +624,9 @@ public class MapPaneFragment extends Fragment
     }
 
     public void setPlaceGetDirections(String placeID) {
+        DrawerLayout menu = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        menu.closeDrawers();
+
         Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeID).setResultCallback(new ResultCallback<PlaceBuffer>() {
             @Override
             public void onResult(PlaceBuffer places) {
@@ -625,6 +654,13 @@ public class MapPaneFragment extends Fragment
         zoomToDevice(mCurrentLocation, 15);
     }
 
+    public void safePreferenceNoWelcome(boolean show) {
+        SharedPreferences pref = getActivity().getSharedPreferences(Keys.SharedPref.SHARED_PREF_APP_NAME, 0);
+        SharedPreferences.Editor e = pref.edit();
+        e.putBoolean(Keys.SharedPref.KEY_SHOW_WELCOME, show);
+        e.apply();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -650,6 +686,9 @@ public class MapPaneFragment extends Fragment
                     break;
                 case REQUEST_CODE_START_JOURNEY:
                     break;
+                default:
+                    Log.d(TAG, "onActivityResult. Request code: " + requestCode);
+                    break;
             }
         } else {
             Log.d(TAG, "onActivityResult, cancelled");
@@ -674,9 +713,22 @@ public class MapPaneFragment extends Fragment
         @Override
         public void onClick(View v) {
             Log.d(TAG, "startJourney onClick");
+
+            if (mContacts.isEmpty()) {
+                new AlertDialog.Builder(getContext()).setTitle(getString(R.string.dialog_no_contacts_title)).setMessage(R.string.dialog_no_contacts_message).show();
+                return;
+            }
+
             mJourneyInProgress = true;
-            launchSMSAlarm((int) mRoute.getDurationinMinutes() / 2);
-            launchSMSAlarm((int) mRoute.getDurationinMinutes());
+            String halfSMSMessage = getString(R.string.message_notify_halfway_sms, mUserName);
+            String fullSMSMessage = getString(R.string.message_notify_fullway_sms, mUserName);
+            String halfNotifMessage = getString(R.string.notification_halfway_message);
+            String fullNotifMessage = getString(R.string.notification_fullway_message);
+
+            launchSMSAlarm((int) mRoute.getDurationinMinutes() / 2, halfSMSMessage);
+            launchSMSAlarm((int) mRoute.getDurationinMinutes(), fullSMSMessage);
+            setTimedNotification((int) mRoute.getDurationinMinutes() / 2, halfNotifMessage);
+            setTimedNotification((int) mRoute.getDurationinMinutes(), fullNotifMessage);
             mButtonFinishJourney.setVisibility(View.VISIBLE);
             mButtonStartJourney.setVisibility(View.GONE);
 

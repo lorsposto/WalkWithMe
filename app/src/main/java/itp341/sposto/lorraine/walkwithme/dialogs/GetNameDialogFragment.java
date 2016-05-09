@@ -25,7 +25,6 @@ public class GetNameDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        // Add the buttons
         final View v = inflater.inflate(R.layout.get_name_dialog_fragment, null);
         builder.setView(v).
                 setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {

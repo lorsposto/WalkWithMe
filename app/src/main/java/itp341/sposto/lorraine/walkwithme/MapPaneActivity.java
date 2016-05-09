@@ -1,21 +1,9 @@
 package itp341.sposto.lorraine.walkwithme;
 
-import android.Manifest;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,18 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import itp341.sposto.lorraine.walkwithme.dialogs.GetNameDialogFragment;
 import itp341.sposto.lorraine.walkwithme.dialogs.RecentPlacesDialog;
@@ -46,18 +25,11 @@ import itp341.sposto.lorraine.walkwithme.models.MyPlace;
  */
 public class MapPaneActivity extends AppCompatActivity {
     private static final String TAG = MapPaneActivity.class.getSimpleName();
-    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private String mActivityTitle;
-
-//    private BroadcastReceiver mRegistrationBroadcastReceiver;
-//    private ProgressBar mRegistrationProgressBar;
-//    private TextView mInformationTextView;
-    private boolean isReceiverRegistered;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +49,6 @@ public class MapPaneActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
 
         final String[] menuItems = getResources().getStringArray(R.array.menu_items);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -124,25 +95,9 @@ public class MapPaneActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
             }
         };
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerToggle.setDrawerIndicatorEnabled(false);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
-
-//        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                SharedPreferences sharedPreferences =
-//                        PreferenceManager.getDefaultSharedPreferences(context);
-//                boolean sentToken = sharedPreferences
-//                        .getBoolean(Keys.SENT_TOKEN_TO_SERVER, false);
-////                if (sentToken) {
-////                    mInformationTextView.setText(getString(R.string.gcm_send_message));
-////                } else {
-////                    mInformationTextView.setText(getString(R.string.token_error_message));
-////                }
-//            }
-//        };
-//
-//        registerReceiver();
+        mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic_menu);
 
     }
 
@@ -151,41 +106,14 @@ public class MapPaneActivity extends AppCompatActivity {
         return mDrawerToggle.onOptionsItemSelected(item);
     }
 
-//    private void registerReceiver(){
-//        if(!isReceiverRegistered) {
-//            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-//                    new IntentFilter(Keys.REGISTRATION_COMPLETE));
-//            isReceiverRegistered = true;
-//        }
-//    }
-
     @Override
     protected void onResume() {
         super.onResume();
-//        registerReceiver();
     }
 
     @Override
     protected void onPause() {
-//        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
-//        isReceiverRegistered = false;
         super.onPause();
     }
 
-    private boolean checkPlayServices() {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
-                        .show();
-            } else {
-                Log.i(TAG, "This device is not supported.");
-                finish();
-            }
-            return false;
-        }
-        return true;
-
-    }
 }
